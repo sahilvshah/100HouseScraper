@@ -1,0 +1,26 @@
+name: Apartment Scraper Emailer
+
+on:
+  schedule:
+    - cron: '30 14 * * *'  # 10:30 am EST (14:30 UTC)
+    - cron: '0 23 * * *'   # 6:00 pm EST (23:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || pip install requests beautifulsoup4 pyjson5
+      - name: Run scraper and email results
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_RESULTS: 'true'
+        run: python apartment_scrapper.py
