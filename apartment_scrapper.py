@@ -215,7 +215,7 @@ def display_results(apartments, email_results=False):
         send_email(
             subject="100 House NJ - Available 2BR/2BA Apartments",
             body=result_str,
-            to_email="mal84.sahil@gmail.com"
+            to_email="mail84.sahil@gmail.com"
         )
 
 def main():
